@@ -25,7 +25,7 @@ Stylish Alert Dialogs for Android.
 	    <version>Tag</version>
 	</dependency>
 	
-===================
+---
 
 **Gradle**
 
@@ -41,7 +41,7 @@ Stylish Alert Dialogs for Android.
 	        implementation 'com.github.MarsadMaqsood:AppUpdate:0.1.+'
 	}
 	
-===================
+---
 	
 #### How to Use
 
@@ -69,8 +69,8 @@ Stylish Alert Dialogs for Android.
 
         updateWrapper.start();
         
-===================
-        
+---
+
 #### License
 
 Apache License 2.0. See the [LICENSE](https://github.com/MarsadMaqsood/AppUpdate/blob/master/LICENSE) file for details.
