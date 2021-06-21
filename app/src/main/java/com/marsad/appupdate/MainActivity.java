@@ -1,18 +1,43 @@
 package com.marsad.appupdate;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final int PERMISSION_REQUEST_CODE = 101;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        UpdateWrapper updateWrapper = new UpdateWrapper.Builder(this)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_DENIED) {
+
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+            } else {
+                Log.v("MainActivity", "Permission is Granted");
+
+            }
+        } else { //permission is automatically granted on sdk<23 upon installation
+            Log.v("MainActivity", "Permission is granted");
+
+        }
+
+    }
+
+    private void checkUpdate() {
+
+        UpdateWrapper updateWrapper = new UpdateWrapper.Builder(MainActivity.this)
 
                 .setTime(3000)
                 //set notification icon
@@ -20,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
                 //set update file url
                 .setUrl("https://marsad.ml/update.json")
                 //set customs activity
-                .setCustomsActivity(cls)
+//                                .setCustomsActivity(cls)
                 //set showToast. default is true
                 .setIsShowToast(false)
                 //add callback ,return new version info
@@ -36,5 +61,17 @@ public class MainActivity extends AppCompatActivity {
 
         updateWrapper.start();
 
+
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == PERMISSION_REQUEST_CODE && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            checkUpdate();
+        }
+
+    }
+
 }
