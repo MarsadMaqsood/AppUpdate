@@ -22,7 +22,7 @@ Library to check app updates
 	<dependency>
 	    <groupId>com.github.MarsadMaqsood</groupId>
 	    <artifactId>AppUpdate</artifactId>
-	    <version>Tag</version>
+	    <version>0.1.+</version>
 	</dependency>
 	
 -------
