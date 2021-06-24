@@ -48,7 +48,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/selector_update_lib_button"
                     android:text="@string/update_lib_cancel"
-                    android:textColor="#4a4a4a" />
+                    android:textColor="#fff" />
 
                 <Button
                     android:id="@+id/btnUpdate"
@@ -58,7 +58,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/selector_update_lib_button"
                     android:text="@string/update_lib_update"
-                    android:textColor="#4a4a4a" />
+                    android:textColor="#fff" />
 
             </LinearLayout>
         </LinearLayout>

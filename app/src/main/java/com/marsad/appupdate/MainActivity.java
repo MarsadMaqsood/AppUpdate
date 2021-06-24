@@ -25,12 +25,8 @@ public class MainActivity extends AppCompatActivity {
 
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
             } else {
-                Log.v("MainActivity", "Permission is Granted");
-
+                checkUpdate();
             }
-        } else { //permission is automatically granted on sdk<23 upon installation
-            Log.v("MainActivity", "Permission is granted");
-
         }
 
     }
@@ -39,15 +35,24 @@ public class MainActivity extends AppCompatActivity {
 
         UpdateWrapper updateWrapper = new UpdateWrapper.Builder(MainActivity.this)
 
+                //set update check delay in milliseconds
                 .setTime(3000)
+
                 //set notification icon
                 .setNotificationIcon(R.mipmap.ic_launcher)
+
+                //set custom download dialog title
+//              .setDownloadDialogTitle("Download Started")
+
                 //set update file url
                 .setUrl("https://marsad.ml/update.json")
+
                 //set customs activity
-//                                .setCustomsActivity(cls)
+//              .setCustomsActivity(cls)
+
                 //set showToast. default is true
                 .setIsShowToast(false)
+
                 //add callback ,return new version info
                 .setCallback((model, hasNewVersion) -> {
                     Log.d("Latest Version", hasNewVersion + "");
@@ -60,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         updateWrapper.start();
-
 
     }
 

@@ -108,7 +108,7 @@ public class UpdateDialog extends AbstractFragment implements View.OnClickListen
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         if (context instanceof UpdateActivity) {
             mActivity = (UpdateActivity) context;

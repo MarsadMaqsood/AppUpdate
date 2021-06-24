@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -38,11 +39,13 @@ public class DownloadDialog extends DialogFragment implements View.OnClickListen
     private final static int DONE = 1001;
     private final static int ERROR = 1002;
     private String mDownloadUrl;
+    private String mDownloadTitleText;
     private int notificationIcon;
     private int currentProgress;
-    private Button mBtnCancel;
+    private ImageButton mBtnCancel;
     private Button mBtnBackground;
     private TextView mTvTitle;
+    private TextView mPercentage, mDownloadTitle;
     private ProgressBar mProgressBar;
     private DownLoadService mDownLoadService;
     private boolean mMustUpdate;
@@ -57,10 +60,17 @@ public class DownloadDialog extends DialogFragment implements View.OnClickListen
                     Bundle bundle = msg.getData();
                     long bytesRead = bundle.getLong("bytesRead");
                     long contentLength = bundle.getLong("contentLength");
-                    if (getActivity() != null)
+                    if (getActivity() != null) {
                         mTvTitle.setText(String.format(getResources().getString(R.string.update_lib_file_download_format),
                                 Formatter.formatFileSize(getActivity().getApplication(), bytesRead),
                                 Formatter.formatFileSize(getActivity().getApplication(), contentLength)));
+
+                        mPercentage.setText(
+                                String.format(getResources().getString(R.string.update_lib_file_percentage), (((bytesRead/1024) * 100) / (contentLength / 1024))
+                                ));
+
+
+                    }
                     break;
                 case DONE:
                     if (getActivity() != null) {
@@ -150,6 +160,18 @@ public class DownloadDialog extends DialogFragment implements View.OnClickListen
         return fragment;
     }
 
+    public static DownloadDialog newInstance(String downLoadUrl, int notificationIcon, boolean mustUpdate, boolean isShowBackgroundDownload, String downloadDialogText) {
+        Bundle args = new Bundle();
+        args.putString(Constant.URL, downLoadUrl);
+        args.putString(Constant.DOWNLOAD_DIALOG_HEADER_TEXT, downloadDialogText);
+        args.putInt(Constant.NOTIFICATION_ICON, notificationIcon);
+        args.putBoolean(Constant.MUST_UPDATE, mustUpdate);
+        args.putBoolean(Constant.IS_SHOW_BACKGROUND_DOWNLOAD, isShowBackgroundDownload);
+        DownloadDialog fragment = new DownloadDialog();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -157,6 +179,7 @@ public class DownloadDialog extends DialogFragment implements View.OnClickListen
         mDownloadUrl = getArguments().getString(Constant.URL);
         notificationIcon = getArguments().getInt(Constant.NOTIFICATION_ICON);
         mMustUpdate = getArguments().getBoolean(Constant.MUST_UPDATE);
+        mDownloadTitleText = getArguments().getString(Constant.DOWNLOAD_DIALOG_HEADER_TEXT);
         if (mMustUpdate) {
             setCancelable(false);
         }
@@ -168,12 +191,14 @@ public class DownloadDialog extends DialogFragment implements View.OnClickListen
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mTvTitle = (TextView) view.findViewById(R.id.title);
-        mBtnCancel = (Button) view.findViewById(R.id.btnCancel);
+        mTvTitle = view.findViewById(R.id.title);
+        mDownloadTitle = view.findViewById(R.id.headerText);
+        mPercentage = view.findViewById(R.id.percentage);
+        mBtnCancel = view.findViewById(R.id.btnCancel);
         mBtnCancel.setOnClickListener(this);
-        mBtnBackground = (Button) view.findViewById(R.id.btnBackground);
+        mBtnBackground = view.findViewById(R.id.btnBackground);
         mBtnBackground.setOnClickListener(this);
-        mProgressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+        mProgressBar = view.findViewById(R.id.progressBar);
         mProgressBar.setMax(100);
 
         Intent intent = new Intent(getActivity(), DownLoadService.class);
@@ -185,6 +210,10 @@ public class DownloadDialog extends DialogFragment implements View.OnClickListen
         if (!mIsShowBackgroundDownload) {
             mBtnBackground.setVisibility(View.GONE);
         }
+
+        mDownloadTitle.setText(mDownloadTitleText);
+
+
     }
 
     @Override
