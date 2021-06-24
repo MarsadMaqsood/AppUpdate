@@ -52,6 +52,8 @@ Library to check app updates
                 .setNotificationIcon(R.mipmap.ic_launcher)
                 //set update file url
                 .setUrl("https://marsad.ml/update.json")
+                //set customs download dialog title
+                .setDownloadDialogTitle("Title here")
                 //set customs activity
                 .setCustomsActivity(cls)
                 //set showToast. default is true
