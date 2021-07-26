@@ -6,7 +6,8 @@ App Update
 ===================
 Library to check app updates
 
-![Screenshot 1](https://github.com/MarsadMaqsood/AppUpdate/blob/master/assets/image.gif)
+
+<img src="https://github.com/MarsadMaqsood/AppUpdate/blob/master/assets/image.gif" alt="alt text" width="300" height="620">
 
     
 #### Installation
