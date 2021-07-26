@@ -6,8 +6,7 @@ App Update
 ===================
 Library to check app updates
 
-![Screenshot 1](https://github.com/MarsadMaqsood/AppUpdate/blob/master/assets/1.jpeg)
-![Screenshot 2](https://github.com/MarsadMaqsood/AppUpdate/blob/master/assets/2.jpeg)
+![Screenshot 1](https://github.com/MarsadMaqsood/AppUpdate/blob/master/assets/image.gif)
 
     
 #### Installation
@@ -71,26 +70,12 @@ Library to check app updates
                 .setNotificationIcon(R.mipmap.ic_launcher)
                 //set update file url
                 .setUrl("https://marsad.ml/update.json")
-<<<<<<< HEAD
-<<<<<<< HEAD
-                //set customs download dialog title
-                .setDownloadDialogTitle("Title here")
-=======
                 //set custom update dialog title //Default is "Update Available"
                 .setUpdateTitle("Custom Title Here")
-                //set custom update dialog content text if empty then text from json file set
+                //set custom update dialog content if empty then text from json set
                 .setUpdateContentText("Content Text Here")
                 //set customs download dialog title
                 .setDownloadDialogTitle("Title Here")
->>>>>>> 42627031b4b2338cb760926978a0f2bbcefd3b0a
-=======
-                //set custom update dialog title //Default is "Update Available"
-                .setUpdateTitle("Custom Title Here")
-                //set custom update dialog content text if empty then text from json file set
-                .setUpdateContentText("Content Text Here")
-                //set customs download dialog title
-                .setDownloadDialogTitle("Title Here")
->>>>>>> 3796a6e93e7fdfbf48389f7fc9ee1eedd1770aa7
                 //set customs activity
                 .setCustomsActivity(cls)
                 //set showToast. default is true
