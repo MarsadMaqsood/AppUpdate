@@ -22,7 +22,7 @@ Library to check app updates
 	<dependency>
 	    <groupId>com.github.MarsadMaqsood</groupId>
 	    <artifactId>AppUpdate</artifactId>
-	    <version>Tag</version>
+	    <version>0.1.+</version>
 	</dependency>
 	
 -------
@@ -52,6 +52,8 @@ Library to check app updates
                 .setNotificationIcon(R.mipmap.ic_launcher)
                 //set update file url
                 .setUrl("https://marsad.ml/update.json")
+                //set customs download dialog title
+                .setDownloadDialogTitle("Title here")
                 //set customs activity
                 .setCustomsActivity(cls)
                 //set showToast. default is true
