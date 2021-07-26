@@ -42,6 +42,21 @@ Library to check app updates
 	}
 	
 -------
+
+    setTime(long miliseconds)
+    setUrl(String url)
+    setNotificationIcon(drawable icon)
+    setUpdateTitle(String updatetitle)
+    setUpdateContentText(String updateContentText)
+    setDownloadDialogTitle("String title")
+    setToastMsg(String message)
+    setIsShowBackgroundDownload(boolean value)
+    setIsShowNetworkErrorToast(boolean value)
+    setIsShowToast(boolean value)
+    setCustomsActivity(class cls)
+    setCallback(CheckUpdateTask.Callback calback)
+
+-------
 	
 #### How to Use
 
