@@ -10,7 +10,6 @@
         android:layout_height="wrap_content"
         android:padding="14dp">
 
-
         <TextView
             android:id="@+id/headerText"
             android:layout_width="wrap_content"
@@ -19,7 +18,6 @@
             android:textColor="#1A1F3A"
             android:textSize="20sp"
             android:textStyle="bold" />
-
 
         <TextView
             android:id="@+id/title"

@@ -27,6 +27,8 @@ public class UpdateWrapper {
     private String mUrl;
     private String mToastMsg;
     private String mDownloadHeaderText;
+    private String mUpdateTitle;
+    private String mUpdateContentText;
     private CheckUpdateTask.Callback mCallback;
     private int mNotificationIcon;
     private long mTime;
@@ -100,6 +102,15 @@ public class UpdateWrapper {
                 mDownloadHeaderText = context.getResources().getString(R.string.update_lib_file_download);
             }
 
+            if (mUpdateTitle == null || mUpdateTitle.isEmpty()) {
+                mUpdateTitle = context.getResources().getString(R.string.update_lib_dialog_title);
+            }
+
+            if (mUpdateContentText == null || mUpdateContentText.isEmpty()) {
+                mUpdateContentText = "";
+            }
+
+
             Intent intent = new Intent(context, mCls == null ? UpdateActivity.class : mCls);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra(Constant.MODEL, model);
@@ -108,7 +119,10 @@ public class UpdateWrapper {
             intent.putExtra(Constant.IS_SHOW_TOAST_MSG, mIsShowToast);
             intent.putExtra(Constant.IS_SHOW_BACKGROUND_DOWNLOAD, mIsShowBackgroundDownload);
             intent.putExtra(Constant.DOWNLOAD_DIALOG_HEADER_TEXT, mDownloadHeaderText);
+            intent.putExtra(Constant.UPDATE_TITLE, mUpdateTitle);
+            intent.putExtra(Constant.UPDATE_CONTENT_TEXT, mUpdateContentText);
             context.startActivity(intent);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -146,6 +160,17 @@ public class UpdateWrapper {
             return this;
         }
 
+        public Builder setUpdateTitle(String updateTitle) {
+            wrapper.mUpdateTitle = updateTitle;
+            return this;
+        }
+
+        public Builder setUpdateContentText(String updateContentText) {
+            wrapper.mUpdateContentText = updateContentText;
+            return this;
+        }
+
+
         public Builder setToastMsg(String toastMsg) {
             wrapper.mToastMsg = toastMsg;
             return this;
@@ -180,7 +205,6 @@ public class UpdateWrapper {
             wrapper.mDownloadHeaderText = downloadDialogTitle;
             return this;
         }
-
 
         public UpdateWrapper build() {
             return wrapper;

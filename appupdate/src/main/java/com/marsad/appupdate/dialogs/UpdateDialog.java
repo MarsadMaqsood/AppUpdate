@@ -1,7 +1,9 @@
 package com.marsad.appupdate.dialogs;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +26,8 @@ public class UpdateDialog extends AbstractFragment implements View.OnClickListen
 
     protected VersionModel mModel;
     protected String mToastMsg;
+    protected String mUpdateTitle;
+    protected String mUpdateContentText;
     protected boolean mIsShowToast;
     private UpdateActivity mActivity;
 
@@ -37,24 +41,69 @@ public class UpdateDialog extends AbstractFragment implements View.OnClickListen
         return fragment;
     }
 
+    public static UpdateDialog newInstance(VersionModel model, String toastMsg, boolean isShowToast, String updateTitle) {
+        Bundle args = new Bundle();
+        args.putSerializable(Constant.MODEL, model);
+        args.putString(Constant.TOAST_MSG, toastMsg);
+        args.putBoolean(Constant.IS_SHOW_TOAST_MSG, isShowToast);
+        args.putString(Constant.UPDATE_TITLE, updateTitle);
+        UpdateDialog fragment = new UpdateDialog();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public static UpdateDialog newInstance(VersionModel model, String toastMsg, boolean isShowToast,
+                                           String updateTitle, String updateContentText) {
+        Bundle args = new Bundle();
+        args.putSerializable(Constant.MODEL, model);
+        args.putString(Constant.TOAST_MSG, toastMsg);
+        args.putBoolean(Constant.IS_SHOW_TOAST_MSG, isShowToast);
+        args.putString(Constant.UPDATE_TITLE, updateTitle);
+        args.putString(Constant.UPDATE_CONTENT_TEXT, updateContentText);
+        UpdateDialog fragment = new UpdateDialog();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+        this.getActivity().getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.shape_update_lib_dialog_bg));
         super.onCreate(savedInstanceState);
         mModel = (VersionModel) getArguments().getSerializable(Constant.MODEL);
         mToastMsg = getArguments().getString(Constant.TOAST_MSG);
         mIsShowToast = getArguments().getBoolean(Constant.IS_SHOW_TOAST_MSG);
+
+        try {
+            mUpdateTitle = getArguments().getString(Constant.UPDATE_TITLE);
+        }catch (Exception e){
+            System.out.println("No title");
+            e.printStackTrace();
+        }
+
+        try {
+            mUpdateContentText = getArguments().getString(Constant.UPDATE_CONTENT_TEXT);
+        }catch (Exception e){
+            System.out.println("No Content Text");
+            e.printStackTrace();
+        }
+
+
+
         closeIfNoNewVersionUpdate();
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(getLayout(), container, false);
+        View inf =  inflater.inflate(getLayout(), container, false);
+        return  inf;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        setTitle(view, R.id.tvTitle);
         setContent(view, R.id.tvContent);
     }
 
@@ -65,7 +114,16 @@ public class UpdateDialog extends AbstractFragment implements View.OnClickListen
         }
     }
 
+   private String getTitle(){
+        return  mUpdateTitle;
+   }
+
     private String getContent() {
+
+        if(mUpdateContentText != null && !mUpdateContentText.isEmpty()){
+            return mUpdateContentText;
+        }
+
         StringBuilder sb = new StringBuilder();
         sb.append(getActivity().getResources().getString(R.string.update_lib_version_code))
                 .append(mModel.getVersionName())
@@ -75,9 +133,10 @@ public class UpdateDialog extends AbstractFragment implements View.OnClickListen
                 .append("\n")
                 .append(getActivity().getResources().getString(R.string.update_lib_update_content))
                 .append("\n")
-                .append(mModel.getContent().replaceAll("#", "\\\n"));
+                .append(mModel.getContentText().replaceAll("#", "\\\n"));
         return sb.toString();
     }
+
 
     private void isLatest() {
         if (mIsShowToast) {
@@ -89,7 +148,7 @@ public class UpdateDialog extends AbstractFragment implements View.OnClickListen
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        if (id == R.id.btnCancel) {
+        if (id == R.id.btnCancel || id == R.id.imgBtnCancel) {
             onCancel();
         } else if (id == R.id.btnUpdate) {
             onUpdate();
@@ -118,6 +177,9 @@ public class UpdateDialog extends AbstractFragment implements View.OnClickListen
     @Override
     protected int getLayout() {
         return R.layout.fragment_update;
+
+
+
     }
 
     @Override
@@ -125,6 +187,13 @@ public class UpdateDialog extends AbstractFragment implements View.OnClickListen
         TextView tvContext = (TextView) view.findViewById(contentId);
         tvContext.setText(getContent());
     }
+
+    @Override
+    protected void setTitle(View view, int titleId) {
+        TextView tvTitle = (TextView) view.findViewById(titleId);
+        tvTitle.setText(getTitle());
+    }
+
 
     protected void initIfMustUpdate(View view, int id) {
         if (PackageUtils.getVersionCode(mActivity.getApplicationContext()) < mModel.getMinSupport()) {
@@ -137,7 +206,9 @@ public class UpdateDialog extends AbstractFragment implements View.OnClickListen
     protected void initView(View view) {
         bindUpdateListener(view, R.id.btnUpdate);
         bindCancelListener(view, R.id.btnCancel);
+        bindCancelListener(view, R.id.imgBtnCancel);
         initIfMustUpdate(view, R.id.btnCancel);
+        initIfMustUpdate(view, R.id.imgBtnCancel);
     }
 
     @Override

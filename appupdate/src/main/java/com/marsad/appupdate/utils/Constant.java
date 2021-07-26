@@ -9,4 +9,6 @@ public class Constant {
     public static final String IS_SHOW_BACKGROUND_DOWNLOAD = "is_show_background_download";
     public static final String MUST_UPDATE = "must_update";
     public static final String DOWNLOAD_DIALOG_HEADER_TEXT = "download_dialog_text";
+    public static final String UPDATE_TITLE = "update_dialog_text";
+    public static final String UPDATE_CONTENT_TEXT = "update_dialog_context_text";
 }

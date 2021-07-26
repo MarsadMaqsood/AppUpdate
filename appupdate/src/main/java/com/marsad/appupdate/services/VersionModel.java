@@ -17,7 +17,7 @@ public class VersionModel implements Serializable {
 
     private int versionCode;
     private String versionName;
-    private String content;
+    private String contentText;
     private int minSupport;
     private String url;
 
@@ -37,12 +37,12 @@ public class VersionModel implements Serializable {
         this.versionName = versionName;
     }
 
-    public String getContent() {
-        return content;
+    public String getContentText() {
+        return contentText;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setContentText(String contentText) {
+        this.contentText = contentText;
     }
 
     public int getMinSupport() {
@@ -65,7 +65,7 @@ public class VersionModel implements Serializable {
         JSONObject object = new JSONObject(json);
         versionCode = object.getInt("versionCode");
         versionName = object.getString("versionName");
-        content = object.getString("content");
+        contentText = object.getString("contentText");
         url = object.getString("url");
         minSupport = object.optInt("minSupport");
 

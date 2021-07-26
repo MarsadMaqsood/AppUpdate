@@ -13,6 +13,8 @@ public abstract class AbstractFragment extends DialogFragment {
 
     protected abstract void setContent(View view, int contentId);
 
+    protected abstract void setTitle(View view, int titleId);
+
     protected abstract void initView(View view);
 
     protected abstract void bindUpdateListener(View view, int updateId);

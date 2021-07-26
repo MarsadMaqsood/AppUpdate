@@ -23,6 +23,9 @@ public class UpdateActivity extends AbstractUpdateActivity implements DownloadDi
     protected boolean mIsShowBackgroundDownload;
     private int notificationIcon;
 
+    private String mUpdateTitle;
+    private String mUpdateContentText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +38,8 @@ public class UpdateActivity extends AbstractUpdateActivity implements DownloadDi
         mIsShowToast = getIntent().getBooleanExtra(Constant.IS_SHOW_TOAST_MSG, true);
         mIsShowBackgroundDownload = getIntent().getBooleanExtra(Constant.IS_SHOW_BACKGROUND_DOWNLOAD, true);
         mDownloadDialogText = getIntent().getStringExtra(Constant.DOWNLOAD_DIALOG_HEADER_TEXT);
+        mUpdateTitle = getIntent().getStringExtra(Constant.UPDATE_TITLE);
+        mUpdateContentText = getIntent().getStringExtra(Constant.UPDATE_CONTENT_TEXT);
         if (mModel == null) {
             finish();
             return;
@@ -82,6 +87,14 @@ public class UpdateActivity extends AbstractUpdateActivity implements DownloadDi
 
     @Override
     protected Fragment getUpdateDialogFragment() {
+        if (mUpdateTitle != null && !mUpdateTitle.isEmpty()) {
+
+            if (mUpdateContentText != null && !mUpdateContentText.isEmpty())
+                return UpdateDialog.newInstance(mModel, mToastMsg, mIsShowToast, mUpdateTitle, mUpdateContentText);
+
+            return UpdateDialog.newInstance(mModel, mToastMsg, mIsShowToast, mUpdateTitle);
+        }
+
         return UpdateDialog.newInstance(mModel, mToastMsg, mIsShowToast);
     }
 

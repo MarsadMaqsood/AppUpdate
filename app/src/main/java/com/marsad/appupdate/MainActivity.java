@@ -44,6 +44,12 @@ public class MainActivity extends AppCompatActivity {
                 //set custom download dialog title
 //              .setDownloadDialogTitle("Download Started")
 
+                //set update dialog title
+                .setUpdateTitle("Stay with time")
+
+                //set update dialog content text
+                .setUpdateContentText("Update to ensure that you are enjoying the latest features of the app.")
+
                 //set update file url
                 .setUrl("https://marsad.ml/update.json")
 
@@ -58,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("Latest Version", hasNewVersion + "");
                     Log.d("Version Name", model.getVersionName());
                     Log.d("Version Code", model.getVersionCode() + "");
-                    Log.d("Version Description", model.getContent());
+                    Log.d("Version Description", model.getContentText());
                     Log.d("Min Support", model.getMinSupport() + "");
                     Log.d("Download URL", model.getUrl() + "");
                 })
@@ -72,7 +78,8 @@ public class MainActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if (requestCode == PERMISSION_REQUEST_CODE && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        if (requestCode == PERMISSION_REQUEST_CODE && grantResults.length > 0 &&
+                grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             checkUpdate();
         }
 
