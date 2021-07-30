@@ -61,6 +61,17 @@ Library to check app updates
     setCallback(CheckUpdateTask.Callback calback)
 
 -------
+**Json Structure**
+
+    {
+        "versionCode":VERSION_CODE,                 //int
+        "versionName":"VERSION_NAME",               //string
+        "contentText":"DIALOG_CONTENT_TEXT",        //string
+        "minSupport":MINIMUM_SUPPORT_VERSION_CODE,  //int
+        "url":"APP_DOWNLOAD_URL"                    //string
+    }
+
+---
 	
 #### How to Use
 
