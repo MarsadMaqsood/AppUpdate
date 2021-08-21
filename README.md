@@ -46,65 +46,69 @@ Library to check app updates
 	}
 	
 -------
-
-    setTime(long miliseconds)
-    setUrl(String url)
-    setNotificationIcon(drawable icon)
-    setUpdateTitle(String updatetitle)
-    setUpdateContentText(String updateContentText)
-    setDownloadDialogTitle("String title")
-    setToastMsg(String message)
-    setIsShowBackgroundDownload(boolean value)
-    setIsShowNetworkErrorToast(boolean value)
-    setIsShowToast(boolean value)
-    setCustomsActivity(class cls)
-    setCallback(CheckUpdateTask.Callback calback)
+```java
+setTime(long miliseconds)
+setUrl(String url)
+setNotificationIcon(Drawable icon)
+setUpdateTitle(String updatetitle)
+setUpdateContentText(String updateContentText)
+setDownloadDialogTitle(String title)
+setToastMsg(String message)
+setIsShowBackgroundDownload(boolean value)
+setIsShowNetworkErrorToast(boolean value)
+setIsShowToast(boolean value)
+setCustomsActivity(class cls)
+setCallback(CheckUpdateTask.Callback calback)
+```
 
 -------
 **Json Structure**
 
     {
-        "versionCode":VERSION_CODE,                 //int
-        "versionName":"VERSION_NAME",               //string
-        "contentText":"DIALOG_CONTENT_TEXT",        //string
-        "minSupport":MINIMUM_SUPPORT_VERSION_CODE,  //int
-        "url":"APP_DOWNLOAD_URL"                    //string
+        "versionCode":VERSION_CODE,                    //int
+        "versionName":"VERSION_NAME",                  //string
+        "contentText":"DIALOG_CONTENT_TEXT",           //string
+        "minSupport":MINIMUM_SUPPORTED_VERSION_CODE,   //int
+        "url":"APP_DOWNLOAD_URL"                       //string
     }
 
 ---
 	
 #### How to Use
 
-        UpdateWrapper updateWrapper = new UpdateWrapper.Builder(this)
-                //set time in millisecounds
-                .setTime(3000)
-                //set notification icon
-                .setNotificationIcon(R.mipmap.ic_launcher)
-                //set update file url
-                .setUrl("https://marsad.ml/update.json")
-                //set custom update dialog title //Default is "Update Available"
-                .setUpdateTitle("Custom Title Here")
-                //set custom update dialog content if empty then text from json set
-                .setUpdateContentText("Content Text Here")
-                //set customs download dialog title
-                .setDownloadDialogTitle("Title Here")
-                //set customs activity
-                .setCustomsActivity(cls)
-                //set showToast. default is true
-                .setIsShowToast(false)
-                //add callback ,return new version info
-                .setCallback((model, hasNewVersion) -> {
-                    Log.d("Latest Version", hasNewVersion + "");
-                    Log.d("Version Name", model.getVersionName());
-                    Log.d("Version Code", model.getVersionCode() + "");
-                    Log.d("Version Description", model.getContent());
-                    Log.d("Min Support", model.getMinSupport() + "");
-                    Log.d("Download URL", model.getUrl());
-                })
-                .build();
+```java
+UpdateWrapper updateWrapper = new UpdateWrapper.Builder(this)
+        //set time in millisecounds
+        .setTime(3000)
+        //set notification icon
+        .setNotificationIcon(R.mipmap.ic_launcher)
+        //set update file url
+        .setUrl("https://marsad.ml/update.json")
+        //set custom update dialog title //Default is "Update Available"
+        .setUpdateTitle("Custom Title Here")
+        //set custom update dialog content if empty then text from json set
+        .setUpdateContentText("Content Text Here")
+        //set customs download dialog title
+        .setDownloadDialogTitle("Title Here")
+        //set customs activity
+        .setCustomsActivity(cls)
+        //set showToast. default is true
+        .setIsShowToast(false)
+        //add callback ,return new version info
+        .setCallback((model, hasNewVersion) -> {
+            Log.d("Latest Version", hasNewVersion + "");
+            Log.d("Version Name", model.getVersionName());
+            Log.d("Version Code", model.getVersionCode() + "");
+            Log.d("Version Description", model.getContent());
+            Log.d("Min Support", model.getMinSupport() + "");
+            Log.d("Download URL", model.getUrl());
+        })
+        .build();
 
-        updateWrapper.start();
-        
+updateWrapper.start();
+
+```        
+
 -------
 
 #### License
