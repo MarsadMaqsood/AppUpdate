@@ -29,7 +29,7 @@ public class TrustAllCertificates implements X509TrustManager, HostnameVerifier 
 
     @SuppressLint("TrustAllX509TrustManager")
     @Override
-    public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+    public void checkServerTrusted(X509Certificate[] chain, String authType) {
 
     }
 
