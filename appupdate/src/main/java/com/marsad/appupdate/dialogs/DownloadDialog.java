@@ -202,6 +202,7 @@ public class DownloadDialog extends DialogFragment implements View.OnClickListen
         mProgressBar.setMax(100);
 
         Intent intent = new Intent(getActivity(), DownLoadService.class);
+        assert getActivity() != null : "getActivity() is null"; //TODO: To be tested before publishing
         getActivity().bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
 
         if (mMustUpdate) {

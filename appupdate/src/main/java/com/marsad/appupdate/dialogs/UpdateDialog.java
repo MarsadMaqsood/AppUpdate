@@ -1,9 +1,7 @@
 package com.marsad.appupdate.dialogs;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.provider.CalendarContract;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.res.ResourcesCompat;
 
 import com.marsad.appupdate.R;
 import com.marsad.appupdate.base.AbstractFragment;
@@ -68,7 +67,8 @@ public class UpdateDialog extends AbstractFragment implements View.OnClickListen
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        this.getActivity().getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.shape_update_lib_dialog_bg));
+        this.getActivity().getWindow().setBackgroundDrawable(ResourcesCompat.getDrawable(getResources(),
+                R.drawable.shape_update_lib_dialog_bg, null));
         super.onCreate(savedInstanceState);
         mModel = (VersionModel) getArguments().getSerializable(Constant.MODEL);
         mToastMsg = getArguments().getString(Constant.TOAST_MSG);
@@ -76,18 +76,17 @@ public class UpdateDialog extends AbstractFragment implements View.OnClickListen
 
         try {
             mUpdateTitle = getArguments().getString(Constant.UPDATE_TITLE);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("No title");
             e.printStackTrace();
         }
 
         try {
             mUpdateContentText = getArguments().getString(Constant.UPDATE_CONTENT_TEXT);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("No Content Text");
             e.printStackTrace();
         }
-
 
 
         closeIfNoNewVersionUpdate();
@@ -95,9 +94,8 @@ public class UpdateDialog extends AbstractFragment implements View.OnClickListen
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View inf =  inflater.inflate(getLayout(), container, false);
-        return  inf;
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(getLayout(), parent, false);
     }
 
     @Override
@@ -114,13 +112,13 @@ public class UpdateDialog extends AbstractFragment implements View.OnClickListen
         }
     }
 
-   private String getTitle(){
-        return  mUpdateTitle;
-   }
+    private String getTitle() {
+        return mUpdateTitle;
+    }
 
     private String getContent() {
 
-        if(mUpdateContentText != null && !mUpdateContentText.isEmpty()){
+        if (mUpdateContentText != null && !mUpdateContentText.isEmpty()) {
             return mUpdateContentText;
         }
 
@@ -177,7 +175,6 @@ public class UpdateDialog extends AbstractFragment implements View.OnClickListen
     @Override
     protected int getLayout() {
         return R.layout.fragment_update;
-
 
 
     }

@@ -102,7 +102,7 @@ public class DownLoadService extends Service {
     }
 
     public void showNotification(int current) {
-        mBuilder = new NotificationCompat.Builder(this);
+        mBuilder = new NotificationCompat.Builder(this, "update_channel"); //Added the Channel ID
         mBuilder.setContentTitle(getResources().getString(R.string.update_lib_file_download))
                 .setContentText(getResources().getString(R.string.update_lib_file_downloading))
                 .setSmallIcon(notificationIcon == 0 ? R.drawable.ic_launcher : notificationIcon);

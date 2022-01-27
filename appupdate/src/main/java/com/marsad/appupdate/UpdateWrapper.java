@@ -20,9 +20,7 @@ import com.marsad.appupdate.utils.ToastUtils;
 import java.util.Map;
 
 public class UpdateWrapper {
-
-    private static final String TAG = "UpdateWrapper";
-
+    
     private Context mContext;
     private String mUrl;
     private String mToastMsg;
@@ -80,7 +78,7 @@ public class UpdateWrapper {
             return;
         }
         if (TextUtils.isEmpty(mUrl)) {
-            throw new RuntimeException("url not be null");
+            throw new RuntimeException("url should not be null");
         }
 
         if (checkUpdateTime(mTime)) {
@@ -169,7 +167,6 @@ public class UpdateWrapper {
             wrapper.mUpdateContentText = updateContentText;
             return this;
         }
-
 
         public Builder setToastMsg(String toastMsg) {
             wrapper.mToastMsg = toastMsg;

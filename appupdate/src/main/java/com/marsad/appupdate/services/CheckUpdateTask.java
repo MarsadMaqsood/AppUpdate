@@ -16,6 +16,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -30,7 +31,8 @@ public class CheckUpdateTask extends Thread {
     private Boolean mIsPost;
     private Map<String, String> mPostParams;
 
-    public CheckUpdateTask(Context context, String checkUpdateUrl, Boolean isPost, Map<String, String> postParams, Callback callBack) {
+    public CheckUpdateTask(Context context, String checkUpdateUrl, Boolean isPost, Map<String, String> postParams,
+                           Callback callBack) {
         mContext = context;
         mCheckUpdateUrl = checkUpdateUrl;
         mIsPost = isPost;
@@ -75,7 +77,7 @@ public class CheckUpdateTask extends Thread {
                 }
 
                 String urlParameters = mStringBuilder.toString();
-                byte[] postData = urlParameters.getBytes(Charset.forName("UTF-8"));
+                byte[] postData = urlParameters.getBytes(StandardCharsets.UTF_8);
                 int postDataLength = postData.length;
 
                 connection.setRequestMethod("POST");

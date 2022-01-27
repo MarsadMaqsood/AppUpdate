@@ -83,7 +83,8 @@ public class DownloadTask extends Thread {
         byte[] buf = new byte[2048];
         File file = new File(filePath);
         if (file.exists()) {
-            file.delete();
+            boolean isDeleted = file.delete();
+            System.out.println(isDeleted);
         }
         fileOutputStream = new FileOutputStream(file);
         int bytesRead = 0;

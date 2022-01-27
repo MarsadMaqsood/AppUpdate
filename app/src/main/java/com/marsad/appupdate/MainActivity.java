@@ -19,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        findViewById(R.id.abc).setOnClickListener(view -> checkUpdate());
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     == PackageManager.PERMISSION_DENIED) {
@@ -51,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
                 .setUpdateContentText("Update to ensure that you are enjoying the latest features of the app.")
 
                 //set update file url
-                .setUrl("https://marsad.ml/update.json")
+                .setUrl("https://marsad.dev/update.json")
 
                 //set customs activity
 //              .setCustomsActivity(cls)
