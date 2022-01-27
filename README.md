@@ -83,7 +83,7 @@ UpdateWrapper updateWrapper = new UpdateWrapper.Builder(this)
         //set notification icon
         .setNotificationIcon(R.mipmap.ic_launcher)
         //set update file url
-        .setUrl("https://marsad.ml/update.json")
+        .setUrl("https://marsad.dev/update.json")
         //set custom update dialog title //Default is "Update Available"
         .setUpdateTitle("Custom Title Here")
         //set custom update dialog content if empty then text from json set
