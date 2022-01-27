@@ -1,5 +1,6 @@
 package com.marsad.appupdate.services;
 
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Intent;
@@ -30,6 +31,14 @@ public class DownLoadService extends Service {
     public void onCreate() {
         super.onCreate();
         mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            System.out.println("Notification init");
+            NotificationChannel channel = new NotificationChannel("update_channel", "update_channel", NotificationManager.IMPORTANCE_HIGH);
+            channel.setDescription("Notification channel for app update alerts");
+            mNotificationManager.createNotificationChannel(channel);
+        }
+
 
     }
 

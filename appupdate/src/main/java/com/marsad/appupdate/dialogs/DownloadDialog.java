@@ -51,7 +51,7 @@ public class DownloadDialog extends DialogFragment implements View.OnClickListen
     private boolean mMustUpdate;
     private boolean mIsShowBackgroundDownload;
     private OnFragmentOperation mOnFragmentOperation;
-    private Handler mHandler = new Handler(Looper.getMainLooper()) {
+    private final Handler mHandler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -96,7 +96,7 @@ public class DownloadDialog extends DialogFragment implements View.OnClickListen
             }
         }
     };
-    private DownloadTask.ProgressListener mProgressListener = new DownloadTask.ProgressListener() {
+    private final DownloadTask.ProgressListener mProgressListener = new DownloadTask.ProgressListener() {
         @Override
         public void done() {
             mHandler.sendEmptyMessage(DONE);
@@ -124,7 +124,7 @@ public class DownloadDialog extends DialogFragment implements View.OnClickListen
             mHandler.sendEmptyMessage(ERROR);
         }
     };
-    private ServiceConnection mConnection = new ServiceConnection() {
+    private final ServiceConnection mConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             DownLoadService.DownLoadBinder binder = (DownLoadService.DownLoadBinder) service;
@@ -176,6 +176,7 @@ public class DownloadDialog extends DialogFragment implements View.OnClickListen
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_download, container, false);
+        assert getArguments() != null;
         mDownloadUrl = getArguments().getString(Constant.URL);
         notificationIcon = getArguments().getInt(Constant.NOTIFICATION_ICON);
         mMustUpdate = getArguments().getBoolean(Constant.MUST_UPDATE);
@@ -202,7 +203,7 @@ public class DownloadDialog extends DialogFragment implements View.OnClickListen
         mProgressBar.setMax(100);
 
         Intent intent = new Intent(getActivity(), DownLoadService.class);
-        assert getActivity() != null : "getActivity() is null"; //TODO: To be tested before publishing
+        assert getActivity() != null : "getActivity() is null";
         getActivity().bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
 
         if (mMustUpdate) {

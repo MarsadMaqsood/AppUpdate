@@ -63,6 +63,7 @@ public class CheckUpdateTask extends Thread {
             if (mIsPost) {
                 StringBuilder mStringBuilder = new StringBuilder("");
                 if (mPostParams != null) {
+
                     Set set = mPostParams.entrySet();
                     Iterator iterator = set.iterator();
                     while (iterator.hasNext()) {

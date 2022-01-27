@@ -36,8 +36,8 @@ public class UpdateWrapper {
     private boolean mIsPost = false;
     private Map<String, String> mPostParams;
     private Class<? extends FragmentActivity> mCls;
-    private Handler mHandler = new Handler(Looper.getMainLooper());
-    private CheckUpdateTask.Callback mInnerCallBack = new CheckUpdateTask.Callback() {
+    private final Handler mHandler = new Handler(Looper.getMainLooper());
+    private final CheckUpdateTask.Callback mInnerCallBack = new CheckUpdateTask.Callback() {
         @Override
         public void callBack(VersionModel model, boolean hasNewVersion) {
             if (model == null) {
@@ -127,7 +127,7 @@ public class UpdateWrapper {
     }
 
     public static class Builder {
-        private UpdateWrapper wrapper = new UpdateWrapper();
+        private final UpdateWrapper wrapper = new UpdateWrapper();
 
         public Builder(Context context) {
             wrapper.mContext = context;

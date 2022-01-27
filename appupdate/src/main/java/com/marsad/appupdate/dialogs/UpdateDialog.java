@@ -122,17 +122,15 @@ public class UpdateDialog extends AbstractFragment implements View.OnClickListen
             return mUpdateContentText;
         }
 
-        StringBuilder sb = new StringBuilder();
-        sb.append(getActivity().getResources().getString(R.string.update_lib_version_code))
-                .append(mModel.getVersionName())
-                .append(".")
-                .append(mModel.getVersionCode())
-                .append("\n")
-                .append("\n")
-                .append(getActivity().getResources().getString(R.string.update_lib_update_content))
-                .append("\n")
-                .append(mModel.getContentText().replaceAll("#", "\\\n"));
-        return sb.toString();
+        return getActivity().getResources().getString(R.string.update_lib_version_code) +
+                mModel.getVersionName() +
+                "." +
+                mModel.getVersionCode() +
+                "\n" +
+                "\n" +
+                getActivity().getResources().getString(R.string.update_lib_update_content) +
+                "\n" +
+                mModel.getContentText().replaceAll("#", "\\\n");
     }
 
 
