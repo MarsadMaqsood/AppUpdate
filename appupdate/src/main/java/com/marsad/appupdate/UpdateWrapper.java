@@ -78,7 +78,7 @@ public class UpdateWrapper {
             return;
         }
         if (TextUtils.isEmpty(mUrl)) {
-            throw new RuntimeException("url should not be null");
+            throw new RuntimeException("URL should not be null");
         }
 
         if (checkUpdateTime(mTime)) {
