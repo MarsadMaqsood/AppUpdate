@@ -25,7 +25,7 @@ public class CheckUpdateTask extends Thread {
 
     private static final String TAG = "CheckUpdateTask";
 
-    private Context mContext;
+    private final Context mContext;
     private Callback mCallBack;
     private String mCheckUpdateUrl;
     private Boolean mIsPost;

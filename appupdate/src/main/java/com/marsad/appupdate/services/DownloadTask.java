@@ -41,12 +41,12 @@ public class DownloadTask extends Thread {
             in = new BufferedInputStream(connection.getInputStream());
             int count = connection.getContentLength();
             if (count <= 0) {
-                Log.e(TAG, "file length must > 0");
+                Log.e(TAG, "file length must be > 0");
                 return;
             }
 
             if (in == null) {
-                Log.e(TAG, "InputStream not be null");
+                Log.e(TAG, "InputStream can not be null");
                 return;
             }
 

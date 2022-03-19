@@ -39,7 +39,6 @@ public class DownLoadService extends Service {
             mNotificationManager.createNotificationChannel(channel);
         }
 
-
     }
 
     public void startDownLoad(String url) {

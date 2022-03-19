@@ -48,6 +48,21 @@ public class DownloadDialog extends DialogFragment implements View.OnClickListen
     private TextView mPercentage, mDownloadTitle;
     private ProgressBar mProgressBar;
     private DownLoadService mDownLoadService;
+    private final ServiceConnection mConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            DownLoadService.DownLoadBinder binder = (DownLoadService.DownLoadBinder) service;
+            mDownLoadService = binder.getService();
+            mDownLoadService.registerProgressListener(mProgressListener);
+            mDownLoadService.startDownLoad(mDownloadUrl);
+            mDownLoadService.setNotificationIcon(notificationIcon);
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            mDownLoadService = null;
+        }
+    };
     private boolean mMustUpdate;
     private boolean mIsShowBackgroundDownload;
     private OnFragmentOperation mOnFragmentOperation;
@@ -66,7 +81,7 @@ public class DownloadDialog extends DialogFragment implements View.OnClickListen
                                 Formatter.formatFileSize(getActivity().getApplication(), contentLength)));
 
                         mPercentage.setText(
-                                String.format(getResources().getString(R.string.update_lib_file_percentage), (((bytesRead/1024) * 100) / (contentLength / 1024))
+                                String.format(getResources().getString(R.string.update_lib_file_percentage), (((bytesRead / 1024) * 100) / (contentLength / 1024))
                                 ));
 
 
@@ -122,21 +137,6 @@ public class DownloadDialog extends DialogFragment implements View.OnClickListen
         @Override
         public void onError() {
             mHandler.sendEmptyMessage(ERROR);
-        }
-    };
-    private final ServiceConnection mConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            DownLoadService.DownLoadBinder binder = (DownLoadService.DownLoadBinder) service;
-            mDownLoadService = binder.getService();
-            mDownLoadService.registerProgressListener(mProgressListener);
-            mDownLoadService.startDownLoad(mDownloadUrl);
-            mDownLoadService.setNotificationIcon(notificationIcon);
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            mDownLoadService = null;
         }
     };
 
@@ -214,8 +214,6 @@ public class DownloadDialog extends DialogFragment implements View.OnClickListen
         }
 
         mDownloadTitle.setText(mDownloadTitleText);
-
-
     }
 
     @Override
@@ -245,13 +243,16 @@ public class DownloadDialog extends DialogFragment implements View.OnClickListen
 
     @Override
     public void onDestroy() {
+        if (getActivity() != null)
+            getActivity().unbindService(mConnection);
         super.onDestroy();
-        getActivity().unbindService(mConnection);
+
     }
 
     private void doCancel() {
         mDownLoadService.cancel();
-        getActivity().finish();
+        if (getActivity() != null)
+            getActivity().finish();
         ToastUtils.show(getActivity(), R.string.update_lib_download_cancel);
     }
 
